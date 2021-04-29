@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "./table";
+import Table from "./common/table";
 import Pagination from "./pagination";
 import { getMovies } from "../services/fakeMovieService";
 import _ from "underscore";
@@ -28,7 +28,7 @@ class Movie extends Component {
   handleDelete = (movie) => {
     const sMovies = [...this.state.movies];
     const currentPage = this.state.currentPage;
-    const movies = sMovies.filter((value) => value._id != movie._id);
+    const movies = sMovies.filter((value) => value._id !== movie._id);
     this.setState({ movies });
     if (movies.length <= currentPage * 4 - 4 && currentPage > 1) {
       this.setState({ currentPage: currentPage - 1 });
