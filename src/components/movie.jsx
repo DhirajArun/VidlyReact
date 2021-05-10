@@ -39,10 +39,27 @@ class Movie extends Component {
     this.setState({ currentPage: pageNo });
   };
 
+  handleLike = (id) => {
+    const movies = [...this.state.movies];
+    let movie = movies.find((movie) => movie._id == id);
+    const index = movies.indexOf(movie);
+    movie = { ...movie };
+
+    if (movie.liked) movie.liked = false;
+    else movie.liked = true;
+
+    movies[index] = movie;
+    this.setState({ movies });
+  };
+
   render() {
     return (
       <div>
-        <Table movies={this.getViewedMovies()} onDelete={this.handleDelete} />
+        <Table
+          movies={this.getViewedMovies()}
+          onDelete={this.handleDelete}
+          onToggle={this.handleLike}
+        />
         <Pagination
           pages={this.getPages()}
           onPageChange={this.handlePageChange}

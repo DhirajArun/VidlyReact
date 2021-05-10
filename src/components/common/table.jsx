@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import THead from "./thead";
 import TBody from "./tbody";
+import Like from "./like";
+
 class Table extends Component {
   state = {
     columns: [
@@ -8,6 +10,19 @@ class Table extends Component {
       { path: "genre.name", label: "Genre" },
       { path: "numberInStock", label: "Stock" },
       { path: "dailyRentalRate", label: "Rate" },
+      {
+        key: "like",
+        content: (movie) => {
+          return (
+            <Like
+              liked={movie.liked}
+              onToggle={() => {
+                return this.props.onToggle(movie._id);
+              }}
+            ></Like>
+          );
+        },
+      },
       {
         key: "delete",
         content: (movie) => {
