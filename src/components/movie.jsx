@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Table from "./common/table";
+import MovieTable from "./movieTable";
 import PaginationBar from "./common/paginationBar";
 import { getMovies } from "../services/fakeMovieService";
 import _ from "lodash";
@@ -43,7 +43,12 @@ class Movie extends Component {
     const paginatedMovie = paginate(movies, 4, currentPage);
     return (
       <div>
-        <Table movies={paginatedMovie} onDelete={this.handleDelete} />
+        <p>Showing {movies.length} movies from the database</p>
+        <MovieTable
+          movies={paginatedMovie}
+          onDelete={this.handleDelete}
+          onToggle={this.handleLike}
+        />
         <PaginationBar
           itemCount={movies.length}
           pageSize={4}
