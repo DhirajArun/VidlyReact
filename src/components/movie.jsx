@@ -1,29 +1,15 @@
 import React, { Component } from "react";
 import Table from "./common/table";
-import Pagination from "./pagination";
+import PaginationBar from "./common/paginationBar";
 import { getMovies } from "../services/fakeMovieService";
-import _ from "underscore";
+import _ from "lodash";
+import { paginate } from "../utils/paginate";
 
 class Movie extends Component {
   state = {
     movies: getMovies(),
     currentPage: 1,
   };
-
-  getViewedMovies() {
-    const { movies, currentPage } = this.state;
-    return movies.slice((currentPage - 1) * 4, currentPage * 4);
-  }
-
-  getPages() {
-    const moviLength = this.state.movies.length;
-    const totalPage =
-      moviLength / 4 === Math.floor(moviLength / 4)
-        ? moviLength / 4
-        : Math.floor(moviLength / 4) + 1;
-    const pages = _.range(1, totalPage + 1);
-    return pages;
-  }
 
   handleDelete = (movie) => {
     const sMovies = [...this.state.movies];
@@ -53,16 +39,16 @@ class Movie extends Component {
   };
 
   render() {
+    const { movies, currentPage } = this.state;
+    const paginatedMovie = paginate(movies, 4, currentPage);
     return (
       <div>
-        <Table
-          movies={this.getViewedMovies()}
-          onDelete={this.handleDelete}
-          onToggle={this.handleLike}
-        />
-        <Pagination
-          pages={this.getPages()}
+        <Table movies={paginatedMovie} onDelete={this.handleDelete} />
+        <PaginationBar
+          itemCount={movies.length}
+          pageSize={4}
           onPageChange={this.handlePageChange}
+          currentPage={currentPage}
         />
       </div>
     );
