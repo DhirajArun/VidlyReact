@@ -14,7 +14,7 @@ class PaginationBar extends Component {
     return pages;
   }
   render() {
-    const { onPageChange, currentPage } = this.props;
+    const { onPageChange } = this.props;
     const pages = this.getPages();
     return (
       <ul style={{ listStyle: "none" }}>

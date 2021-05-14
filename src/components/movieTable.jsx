@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Table from "./common/table";
 import Like from "./common/like";
 
@@ -38,13 +38,20 @@ class MovieTable extends Component {
   ];
 
   render() {
-    const { movies } = this.props;
+    const { movies, sortColumn, onSort } = this.props;
     const moviLength = movies.length;
 
     if (moviLength === 0) {
       return;
     }
-    return <Table columns={this.columns} data={movies}></Table>;
+    return (
+      <Table
+        columns={this.columns}
+        data={movies}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
+    );
   }
 }
 

@@ -13,6 +13,8 @@ class Movie extends Component {
     genres: [{ _id: "564ad83s", name: "All Movies" }, ...getGenres()],
     currentGenre: "564ad83s",
     currentPage: 1,
+    sortColumn: { path: "title", order: "asc" },
+    sortingOrder: "asc",
   };
 
   handleDelete = (movie) => {
@@ -46,6 +48,10 @@ class Movie extends Component {
     this.setState({ currentGenre: genre._id, currentPage: 1 });
   };
 
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
+  };
+
   filterMovie = function (movies, currentGenreId) {
     if (currentGenreId === "564ad83s") return movies;
 
@@ -55,21 +61,37 @@ class Movie extends Component {
     return filtered;
   };
 
+  sortMovie = function (movies, sortColumn) {
+    const sorted = _.orderBy(movies, [sortColumn.path], [sortColumn.order]);
+    return sorted;
+  };
+
   render() {
-    const { movies, currentPage, genres, currentGenre } = this.state;
+    const {
+      movies,
+      currentPage,
+      genres,
+      currentGenre,
+      sortColumn,
+    } = this.state;
+
     const filteredMovie = this.filterMovie(movies, currentGenre);
-    const paginatedMovie = paginate(filteredMovie, 4, currentPage);
+    const sortedMovie = this.sortMovie(filteredMovie, sortColumn);
+    const paginatedMovie = paginate(sortedMovie, 4, currentPage);
+
     return (
       <div>
         <ListGroup items={genres} onListChange={this.handleGenreChange} />
-        <p>Showing {movies.length} movies from the database</p>
+        <p>Showing {sortedMovie.length} movies from the database</p>
         <MovieTable
           movies={paginatedMovie}
           onDelete={this.handleDelete}
           onToggle={this.handleLike}
+          sortColumn={sortColumn}
+          onSort={this.handleSort}
         />
         <PaginationBar
-          itemCount={filteredMovie.length}
+          itemCount={sortedMovie.length}
           pageSize={4}
           onPageChange={this.handlePageChange}
           currentPage={currentPage}
