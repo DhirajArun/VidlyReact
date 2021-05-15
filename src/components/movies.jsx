@@ -7,7 +7,7 @@ import { getGenres } from "../services/fakeGenreService";
 import _ from "lodash";
 import { paginate } from "../utils/paginate";
 
-class Movie extends Component {
+class Movies extends Component {
   state = {
     movies: getMovies(),
     genres: [{ _id: "564ad83s", name: "All Movies" }, ...getGenres()],
@@ -95,4 +95,4 @@ class Movie extends Component {
   }
 }
 
-export default Movie;
+export default Movies;
