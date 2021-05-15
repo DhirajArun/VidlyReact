@@ -13,6 +13,7 @@ class THead extends Component {
   };
 
   raiseSort = (path) => {
+    if (!path) return;
     const sortColumn = { ...this.props.sortColumn };
 
     if (sortColumn.path === path) {
@@ -33,7 +34,7 @@ class THead extends Component {
           {columns.map((column) => {
             return (
               <th
-                style={{ cursor: "pointer" }}
+                style={column.path && { cursor: "pointer" }}
                 key={column.path || column.key}
                 onClick={() => this.raiseSort(column.path)}
               >
