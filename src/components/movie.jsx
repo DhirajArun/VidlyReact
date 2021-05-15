@@ -14,7 +14,6 @@ class Movie extends Component {
     currentGenre: "564ad83s",
     currentPage: 1,
     sortColumn: { path: "title", order: "asc" },
-    sortingOrder: "asc",
   };
 
   handleDelete = (movie) => {
@@ -67,13 +66,8 @@ class Movie extends Component {
   };
 
   render() {
-    const {
-      movies,
-      currentPage,
-      genres,
-      currentGenre,
-      sortColumn,
-    } = this.state;
+    const { movies, currentPage, genres, currentGenre, sortColumn } =
+      this.state;
 
     const filteredMovie = this.filterMovie(movies, currentGenre);
     const sortedMovie = this.sortMovie(filteredMovie, sortColumn);
